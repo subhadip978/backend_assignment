@@ -5,9 +5,13 @@ const app=express();
 const rootDir= require("../util/path")
 const router=express.Router();
 
-router.get('/add-product',(req,res,next)=>{
-	res.sendFile(path.join(rootDir, "views","add-product.html"))
-})
+
+const productController=require('../controllers/product')
+router.get('/add-product',productController.getAddproduct);
+	
+	
+	//res.sendFile(path.join(rootDir, "views","add-product.html"))
+
 
 router.post('/add-product',(req,res)=>{
 

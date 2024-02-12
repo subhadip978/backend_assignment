@@ -6,6 +6,8 @@ const app=express();
 const port=3000;
 
 
+const errorController=require("./controllers/error")
+
 const adminRoute=require("./routes/admin")
 const shopRoute=require("./routes/shop");
 const contactRoute=require("./routes/contact");
@@ -17,9 +19,10 @@ app.use('/admin',adminRoute);
 app.use(shopRoute);
 app.use(contactRoute);
 
-app.use((req,res,next)=>{
-	res.status(404).sendFile(path.join(__dirname,"views","404.html"))
-})
+app.use(errorController.get404);
+	//res.status(404).sendFile(path.join(__dirname,"views","404.html"))
+	//res.status(404).render('404',{pageTitle:'page not found'})
+
 
 
 app.listen(port,()=>{
