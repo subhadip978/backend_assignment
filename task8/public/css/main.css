@@ -1,0 +1,35 @@
+body{
+	padding: 0;
+	margin: 0;
+}
+header{
+	width: 100%;
+	height:50px;
+	background-color: rgb(36, 10, 72);
+
+}
+.main-header{
+
+}
+.main-header_nav{
+	height: 100%;
+	height: 3rem;
+
+	display: flex;
+	align-items: center;
+}
+.main-header_item-list{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	gap: 10px;
+}
+.item{
+	list-style: none;
+}
+
+.item a{
+	text-decoration: none;
+	color: wheat;
+}
