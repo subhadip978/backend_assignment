@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+
+	<form onsubmit="handleFormsubmit(event)" action="">
+
+		<label for="name">NAME:</label>
+		<input type="text" name="name" id="name">
+
+
+		<label for=""email>EMAIL ID:</label>
+		<input type="text" name="email" id="email">
+
+
+			<label for="phone">PH NUMBER:</label>
+		<input type="tel" name="phone" id="phone">
+
+		<button type="submit">ADD</button>
+	</form>
+
+	<ul id="userlist"></ul>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+<script>
+
+	function handleFormsubmit(event){
+		event.preventDefault();
+
+		const name=event.target.name.value;
+		const email=event.target.email.value;
+		const phone=event.target.phone.value;
+
+		const obj={
+			name,
+			email,
+			phone,
+		}
+		const newobj=JSON.stringify(obj);
+		
+
+		axios.post("http://localhost:3000/adduser",obj)
+		.then((res)=>{
+			console.log(ores.data);
+			displayUser(res.data);
+		})
+		.catch((err)=>{
+
+			console.log(err);
+		})
+
+	}
+
+	window.addEventListener("DOMContentLoaded",()=>{
+
+
+		axios.get("http://localhost:3000/getuser")
+		.then((res)=>{
+			res.data.forEach((item)=>{
+				console.log(iten);
+				displayUser(item);
+			})
+			.catch((err)=>{
+				console.log(err);
+			})
+
+		})
+	})
+
+	
+	function displayUser(user){
+
+			const parentNode=document.getElementById("userlist");
+			const liele=document.createElement("li");
+			liele.id=user.email ;
+
+			liele.textContent=user.name +" "+user.email+" "+user.phone ;
+
+			
+			
+			const deletebtn=document.createElement("button");
+			
+			deletebtn.textContent="DELETE";
+
+			deletebtn.onclick=function(){
+				deleteuser(user.email);
+			}
+
+
+			const editbtn=document.createElement("button");
+			editbtn.textContent="EDIT";
+
+			editbtn.onclick=function(){
+				edituser(user.name,user.email,user.phone);
+			}
+
+
+			liele.appendChild(editbtn);
+			liele.appendChild(deletebtn);
+			parentNode.appendChild(liele);
+	}
+
+
+
+
+	function deleteuser(user){
+		localStorage.removeItem(user);
+		const parent=document.getElementById('userlist')
+		const child=document.getElementById(user);
+		parent.removeChild(child);
+
+
+	}
+
+	function edituser(name,email,phone){
+
+		document.getElementById("name").value=name;
+		document.getElementById("email").value=email;
+		document.getElementById("phone").value=phone;
+		deleteuser(email);
+	}
+
+</script>
+</html>
