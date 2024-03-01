@@ -1,21 +1,21 @@
-
 *{
 	margin: 0;
 	padding: 0;
 }
 
 
-.login{
+.register{
 		height: 100vh;
 		background-color: purple;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-
+		
 		.card{
 			width: 50%;
 			background-color: aliceblue;
 			display: flex;
+			flex-direction: row-reverse;
 			border-radius: 10px;
 			min-height: 600px;
 			overflow: hidden;
