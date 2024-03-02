@@ -1,6 +1,7 @@
 
 const db=require("../utils/db") 
 const bcrypt=require('bcrypt');
+const jwt=require("jsonwebtoken")
 
 exports.register=(req,res)=>{
 
@@ -31,6 +32,28 @@ db.query(q,[req.body.name],(err,data)=>{
 }
 
 exports.login=(req,res)=>{
+
+			const q="SELECT * FROM user WHERE name=?"
+
+			db.query(q,[req.body.name],(err,data)=>{
+				if(err)return res.send(err)
+
+				if(data.length===0) return res(404).send("user does not exist");
+
+				const correctPassword=bcrypt.compareSync(req.body.password,data[0].password);
+				if(!correctPassword) return res.status(401).send("wrong password");
+
+				const token=jwt.sign({id:data[0].id},"SECRET_KEY")
+				
+				const{password,...others}=data[0];
+				res.cookie("accessToken",token,{
+					httpOnly:true,
+				})
+				.status(200)
+				.json(others)
+
+				
+			})
 
 
 }
