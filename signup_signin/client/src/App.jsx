@@ -1,37 +1,30 @@
 import React from 'react'
-import Signup from './pages/signup/Signup'
-import Login from './pages/login/Login'
 
-import {createBrowserRouter,RouterProvider,Navigate} from 'react-router-dom';
+import {BrowserRouter ,Routes,Route,Navigate} from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/authContext';
 
+import Signup from './pages/signup/Signup' ;
+import Login from './pages/login/Login' ;
 import Navbar from "./components/navbar/Navbar"
-import Hero from "./components/hero/Hero"
+
 import Home from "./pages/home/Home";
 import Profile from './pages/profile/Profile';
 import Add from "./pages/add/Add"
+import  Update from "./pages/update/Update"
 
 const App = () => {
    const {currentUser}=useContext(AuthContext) ;
 
 
     const Layout=()=>{
-
       return(
-
        <div>
-
          <Navbar/>
-         <Hero/>
-
+          <Home/> 
        </div>
+)}
 
-
-      )
-
-
-    }
     const ProtectedRoute=({children})=>
     {
 
@@ -41,42 +34,23 @@ const App = () => {
       return children ;
     }
   
-  const router=createBrowserRouter([
-    {
-      path:"/",
-      element:(
-        <ProtectedRoute>
-          <Layout/>
-          </ProtectedRoute>
-      ),
-      children:[
-        {
-          path:"/",
-          element:<Home/>
-        },
-        {
-          path:"/profile/:id",
-          element:<Profile/>
-        }
-      ]
-    },
-    {
-      path:"/login",
-      element:<Login/>
-    },
-    {
-      path:"/signup",
-      element:<Signup/>
-    },
-    {
-      path:"/add",
-      element:<Add/>
-    }
-  ])
+  
   return (
     <div>
-          <RouterProvider  router={router}/>
-
+    <BrowserRouter>
+      <Routes>
+        <Route path="/"  element={<ProtectedRoute>
+                         <Layout />
+                      </ProtectedRoute>}>
+          {/* <Route index element={<Home />} /> */}
+          <Route path="/profile/:id" element={<Profile />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/update/:id" element={<Update />} />
+      </Routes>
+    </BrowserRouter>
 
           
     </div>

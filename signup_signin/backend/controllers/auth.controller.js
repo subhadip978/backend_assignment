@@ -43,7 +43,7 @@ exports.login=(req,res)=>{
 				const correctPassword=bcrypt.compareSync(req.body.password,data[0].password);
 				if(!correctPassword) return res.status(401).send("wrong password");
 
-				const token=jwt.sign({id:data[0].id},"SECRET_KEY")
+				const token=jwt.sign({id:data[0].id},process.env.SECRET_KEY)
 				
 				const{password,...others}=data[0];
 				res.cookie("accessToken",token,{

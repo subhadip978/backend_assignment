@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
+import { makeRequest } from "../../axios";
 
 const Add = () => {
 	const navigate=useNavigate();
@@ -12,17 +13,19 @@ const Add = () => {
 	});
 
 	const handleChange=(e)=>{
-		e.preventDefault();
+		// e.preventDefault();
 
-		setExpense(()=>({[e.target.name]:e.target.value})) ;
+		setExpense((prev)=>({...prev ,[e.target.name]:e.target.value})) ;
 
 	}
 
 	const handleClick=async(e)=>{
 		e.preventDefault();
 		try{
-
-			await axios.post("http://localhost:3000/",expense);
+			console.log(expense);
+			const res=await makeRequest.post("http://localhost:3000/api/add",expense);
+			console.log(res);
+			console.log(res.data);
 			navigate("/");
 		}
 		catch(err){

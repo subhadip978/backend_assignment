@@ -2,8 +2,13 @@
 const express=require("express");
 const router=express.Router();
 
-const {addExpense}=require("../controllers/expense.controller");
-router.post("/add",addExpense);
+const {addExpense,deleteExpense,updateExpense,getExpense}=require("../controllers/expense.controller");
+const {verifyToken}=require("../verifyToken");
+
+router.get("/add",verifyToken,getExpense);
+router.post("/add",verifyToken,addExpense);
+router.delete("/:id",verifyToken,deleteExpense);
+router.put("/:id",verifyToken,updateExpense);
 
 
 
