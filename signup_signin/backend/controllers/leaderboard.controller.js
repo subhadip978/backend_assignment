@@ -39,7 +39,7 @@ exports.leaderboard=(req,res)=>{
 			try{
 					const q="SELECT u.name, SUM(e.expense) AS total FROM user u JOIN expens e ON u.id= e.eid GROUP BY u.id,u.name"
 
-					db.query(q,values,(err,data)=>{
+					db.query(q,(err,data)=>{
 						if(err) return res.json("error in leaderboard");
 
 						const leaderboard=data.map(row=>({
@@ -49,14 +49,10 @@ exports.leaderboard=(req,res)=>{
 
 						console.log(leaderboard);
 						res.json(leaderboard);
-					})
+					})}
 
-			}
 
 			catch(err){
 					res.json(err);
 
-			}
-
-
-}
+			}}

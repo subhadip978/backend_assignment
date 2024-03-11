@@ -41,7 +41,7 @@ exports.login=(req,res)=>{
 				if(data.length===0) return res.status(404).send("user does not exist");
 
 				const correctPassword=bcrypt.compareSync(req.body.password,data[0].password);
-				if(!correctPassword) return res.status(401).send("wrong password");
+				if(!correctPassword) return res.status(402).json("wrong password");
 
 				const token=jwt.sign({id:data[0].id},process.env.SECRET_KEY)
 				

@@ -34,6 +34,7 @@ const navigate=useNavigate()
 			navigate("/")
 		}
 		catch(err){
+			console.log(err.response.data)
 			setErr(err.message)
 		}
 	}

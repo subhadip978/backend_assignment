@@ -31,7 +31,7 @@ app.use(cookieParser())
 app.use("/api",authRouter);
 app.use("/api",expenseRouter);
 app.use("/api",premiumRouter);
-app.use("/leaderboard",leaderboardRouter)
+app.use("/api",leaderboardRouter)
 
 
 app.get("/api/getkey",(req,res)=>{

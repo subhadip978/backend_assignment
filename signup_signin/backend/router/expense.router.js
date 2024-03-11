@@ -7,8 +7,8 @@ const {verifyToken}=require("../verifyToken");
 
 router.get("/add",verifyToken,getExpense);
 router.post("/add",verifyToken,addExpense);
-router.delete("/:id",verifyToken,deleteExpense);
-router.put("/:id",verifyToken,updateExpense);
+router.delete("/add/:id",verifyToken,deleteExpense);
+router.put("/add/:id",verifyToken,updateExpense);
 
 
 

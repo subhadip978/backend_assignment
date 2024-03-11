@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState ,useEffect} from "react";
+import { useState ,useEffect,useContext} from "react";
 import { makeRequest } from "../../axios";
-
+import { AuthContext } from "../../context/authContext";
+import Leaderboard from "../../components/leaderboard/Leaderboard";
 
 const Home=()=>{
+
+	const {handlePremium}=useContext(AuthContext);
+	const {premiumUser}=useContext(AuthContext)
 	const[expenses,setExpenses]=useState([]);
 
 	useEffect(()=>{
@@ -25,38 +29,17 @@ const Home=()=>{
 
 
   const checkHandler=async()=>{
-	 const res=await makeRequest.post("http://localhost:3000/api/premium")
-	 console.log(res.data);
+		await handlePremium();
 
-	 var options={
-
-		"key":res.data.key_id,
-		"order_id":res.data.order.id,
-		"handler":async function(res){
-		await axios.post("http://localhost:3000/api/premium",{
-			order_id:options.order_id,
-			payment_id:res.razorpay_payment_id,
-		
-	},{headers: {"Authorization": token}  })
-	 	alert("you are a premium user")
-			}
-  };
-
-  const rzpl=new Razorpay(options);
-  rzpl.open();
-//   e.preventDefault();
-  rzpl.on("payment.failed",function(res){
-	console.log(res)
-	alert('something went wrong')
-  })
 
   }
 
 
-  const handleDelete=(Id)=>{
+  const handleDelete=async(Id)=>{
 
-	axios.delete(`http://localhost:3000/api/${Id}`)
-	window.location.reload();
+	await makeRequest.delete(`http://localhost:3000/api/add/${Id}`)
+	// window.location.reload();
+	setExpenses(expenses.filter(item=>item.id !==Id))
 
   }
 
@@ -81,12 +64,20 @@ const Home=()=>{
                 ) : (
                     <p>No expenses available</p>
                 )}
+
+
+
             </div>
 
 		<button  ><Link to="/add">ADD NEW EXPENSE</Link></button>
 		<button onClick={checkHandler}>MEMBERSHIP</button>
 			
 
+								{premiumUser!==null && (
+									<div className="leaderboard">
+										<Leaderboard/>
+									</div>
+								) }
 
 	</div>
 
