@@ -1,17 +1,23 @@
 import React from 'react'
-import { useEffect } from 'react'
-import axios from 'axios'
+import { useEffect,useState } from 'react'
+
+import { makeRequest } from '../../axios'
 
 const Leaderboard = () => {
 	const [leaderboardData, setLeaderboardData] = useState([]);
 	useEffect(()=>{
 
-		axios.get("http:localhost:30000/api/leaderboard",{
-			withCredentials:true
-		})
-		setLeaderboardData(response.data);
+		const fetchboard=async()=>{
 
-	})
+			const res= await makeRequest.get("http://localhost:3000/api/leaderboard")
+			console.log(res.data)
+			setLeaderboardData(res.data);
+		}
+
+		fetchboard();
+
+
+	},[])
   return (
 	<div>Leaderboard
 

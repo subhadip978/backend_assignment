@@ -40,7 +40,7 @@ exports.addPremium = async (req, res) => {
 	exports.updateTransection=(req,res)=>{
 
 		try{
-				const q= "UPDATE order SET  `paymentid`=?, `status`=?  WHERE orderid=?  ";
+				const q= "UPDATE `order` SET  `paymentid`=?, `status`=?  WHERE orderid=?  ";
 				const values=[
 					req.body.payment_id,
 					"SUCCESSFULL",
@@ -50,15 +50,13 @@ exports.addPremium = async (req, res) => {
 				]
 				db.query(q,values,(err,data)=>{
 					if(err) {
-                        console.log(err);
+                    console.log(err);
                     return res.status(401).json("error in updating transection")
                     }
-					res.status(200).json({success:true,message:"transsection updated"});
+					res.status(200).json({success:true,message:"transection updated"});
 
 				})
-
-
-            }
+ }
 	
 	catch(err){
 		console.log(err);

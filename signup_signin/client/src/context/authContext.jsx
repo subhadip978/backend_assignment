@@ -22,8 +22,8 @@ export const AuthContextProvider = ({ children }) => {
     const handlePremium = async () => {
         try {
             const res = await makeRequest.get("http://localhost:3000/api/premium");
-            console.log(res.data);
-
+            console.log(res);
+            console.log(res.razorpay_payment_id)
             const options = {
                 key: res.data.key_id,
                 order_id: res.data.order.id,
